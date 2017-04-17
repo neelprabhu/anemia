@@ -11,23 +11,26 @@ b.o2   = b.hemo*1.34; % Binding capacity healthy (mL o2 / mL blood)
 b.h2o  = .51;         % Water fraction in blood (g H20 / mL blood)
 b.glu  = .001;        % Mass fraction of glucose in blood (g/mL)
 b.ions = [2.5 100 5.0 135];     % Ion concentrations, [Ca Cl K Na] (mmol/L)
-b.dist = [.04 .15 .22 .05 .20]; % CO Distribution (Heart, Muscle, Kidney, Bone, Intestine)
+b.dist = [.04 1 .15 .22 .05 .20]; % CO Distribution (Heart, Lungs, Muscle, Kidney, Bone, Intestine)
 
 %% Send blood to organs:
 
 for i = 1:100
     
-    % 1. Heart to Lungs, Lungs to Heart (Oxygenation Phase)
+    % 1. Initial metabolic consumption by heart
+    bHeart = heart(b);
+    
+    % 2. Heart to lungs, lungs to heart (oxygenation phase)
     bLung = lungs(b);
     
-    % 2. Heart to Muscle & Kidney (Consumption, Filtration, Excretion)
+    % 3. Heart to muscle & kidney (consumption, filtration, excretion)
     bMus  = muscle(bLung);
     bKid  = kidney(bLung);
     
-    % 4. Muscle & Kidney to Bone (Generate RBCs, Hemoglobin)
+    % 4. Muscle & kidney to bone (generate RBCs, hemoglobin)
     bBone = marrow(bKid);
     
-    % 5. Bone to Small Intestine (Regain Nutrients, Plasma)
+    % 5. Bone to small intestine (regain nutrients, plasma)
     bInt  = intestine(bBone);
     
     % 6. Recycle
