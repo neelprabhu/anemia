@@ -31,9 +31,9 @@ for i = 1:100
     
     % 6. Recycle
     b     = bInt;
+    b = 5;
     
     % 7. Record values of previous iteration
-    % rec
 end
 
 %% Create relevant graphs from b struct
