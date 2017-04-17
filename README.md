@@ -1,2 +1,2 @@
 # anemia
-BME 260 [S17] Final Project
+BME 260 Final Project. Spring 2017.
