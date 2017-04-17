@@ -33,7 +33,6 @@ for i = 1:100
     b     = bInt;
     
     % 7. Record values of previous iteration
-    % rec
 end
 
 %% Create relevant graphs from b struct
