@@ -8,17 +8,15 @@
 %   fL   : Flow in/out.
 
 function [bLung, fL] = lungs(b)
-    Vdot = b.cOut;
     
     % Use ode45 to solve for diffusion of CO2 out of, O2 into blood (1st
     % order)
 
-    % Apply four-step Adair model for binding of O2 onto hemoglobin?
+    % Apply all-or-none binding for O2 to hemoglobin using saturation
+    % curve.
 
 
     % Reintegrate for outflow back to heart.
-
-
 
 
 end

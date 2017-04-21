@@ -9,6 +9,7 @@ b.T    = 37;          % Temperature of blood (C)
 b.hemo = .150;        % Hemoglobin mass fraction in blood (g/mL)
 b.rbc  = b.hemo;      % Assume RBCs are entirely hemoglobin (~.95)
 b.o2   = b.hemo*1.34; % Binding capacity healthy (mL o2 / mL blood)
+
 b.h2o  = .51;         % Water fraction in blood (g H20 / mL blood)
 b.glu  = .001;        % Mass fraction of glucose in blood (g/mL)
 b.ions = [2.5 100 5.0 135];     % Ion concentrations, [Ca Cl K Na] (mmol/L)
