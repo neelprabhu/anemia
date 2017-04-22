@@ -11,6 +11,9 @@ function [bLung, fL] = lungs(b)
     
     % Use ode45 to solve for diffusion of CO2 out of, O2 into blood (1st
     % order)
+    
+    pO2   = linspace(0,100,11);
+    sat   = [0 10 28 53 71 80 86 90 92 95 95];
 
     % Apply all-or-none binding for O2 to hemoglobin using saturation
     % curve.

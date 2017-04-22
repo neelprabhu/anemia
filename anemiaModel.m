@@ -3,15 +3,16 @@
 
 %% Initialize starting parameters of blood and heart
 b      = struct;      % All information about blood goes in here
-b.cOut = 5000;        % Cardiac output, healthy and diseased (mL/min)
+b.cOut = 5000;        % Cardiac output, baseline (mL/min)
 b.p    = 1.06;        % Density of blood (g/mL)
 b.T    = 37;          % Temperature of blood (C)
 b.hemo = .150;        % Hemoglobin mass fraction in blood (g/mL)
 b.rbc  = b.hemo;      % Assume RBCs are entirely hemoglobin (~.95)
-b.o2   = b.hemo*1.34; % Binding capacity healthy (mL o2 / mL blood)
+b.sat  = 0.95;        % Baseline hemoglobin saturation.
+b.o2   = b.hemo*1.34.*b.sat; % Binding capacity healthy (mL o2 / mL blood)
 
-b.h2o  = .51;         % Water fraction in blood (g H20 / mL blood)
-b.glu  = .001;        % Mass fraction of glucose in blood (g/mL)
+b.h2o  = .51;                   % Water fraction in blood (g H20 / mL blood)
+b.glu  = .001;                  % Mass fraction of glucose in blood (g/mL)
 b.ions = [2.5 100 5.0 135];     % Ion concentrations, [Ca Cl K Na] (mmol/L)
 b.dist = [.04 .15 .22 .05 .20]; % CO Distribution (Heart, Muscle, Kidney, Bone, Intestine)
 
