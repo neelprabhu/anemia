@@ -13,8 +13,9 @@ function [bLung, fL] = lungs(b)
     % order)
     
     pO2   = linspace(0,100,11);
-    sat   = [0 10 28 53 71 80 86 90 92 95 95];
-
+    satv   = [0 10 28 53 71 80 86 90 92 95 95];
+    sat   = @(po2) 85./(0.89 + exp(-0.1037.*(po2-27.63)));
+    
     % Apply all-or-none binding for O2 to hemoglobin using saturation
     % curve.
 
