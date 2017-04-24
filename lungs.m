@@ -17,10 +17,16 @@ function [bLung, fL] = lungs(b)
     
     % Baseline values
     Hb    = b.hemo.*100; % Hemoglobin in g/dL;
-    PAO2  = 100; % Alveolar O2 pressure (mmHg)
-    PaO2  = 95;  % Arterial O2 pressure (mmHg)
-    PvO2  = 40;  % Venous O2 pressure (mmHg)
-    PaCO2 = 40;  % Arterial CO2 pressure (mmHg)
+    PAO2  = 100; % Alveolar O2 pressure (mmHg), probably constant
+    PaO2  = 95;  % Arterial O2 pressure (mmHg), function of fixed duration diffusion
+    PvO2  = 40;  % Venous O2 pressure (mmHg), constant?
+    PaCO2 = 40;  % Arterial CO2 pressure (mmHg), constant
+    
+        
+    % Diffusion first order ODE
+    tspan = [0 1000]; % ms
+    O20    = PvO2;     % Initial O2 before oxygenation
+    [t,y] = ode45(@(t,y) 2*t, tspan, O20);
     
     b.sat   = sat(PaO2); % Calculate and store Hb saturation
     b.o2    = CaO2(b.sat,Hb,PaO2) ./ 100; % Calculate total oxygen content (mL/mL)

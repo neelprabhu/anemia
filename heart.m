@@ -8,5 +8,7 @@
 %   fH    : Flow in/out.
 
 function [bHeart,fH] = heart(b)
+    
+   % Control cardiac output of next cycle by looking at O2 demand of tissue.
 
 end
