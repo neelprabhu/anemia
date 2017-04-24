@@ -8,8 +8,6 @@ b.p    = 1.06;        % Density of blood (g/mL)
 b.T    = 37;          % Temperature of blood (C)
 b.hemo = .150;        % Hemoglobin mass fraction in blood (g/mL)
 b.rbc  = b.hemo;      % Assume RBCs are entirely hemoglobin (~.95)
-b.sat  = 0.95;        % Baseline hemoglobin saturation.
-b.o2   = b.hemo*1.34.*b.sat; % Binding capacity healthy (mL o2 / mL blood)
 
 b.h2o  = .51;                   % Water fraction in blood (g H20 / mL blood)
 b.glu  = .001;                  % Mass fraction of glucose in blood (g/mL)
@@ -20,11 +18,12 @@ b.dist = [.04 .15 .22 .05 .20]; % CO Distribution (Heart, Muscle, Kidney, Bone, 
 
 for i = 1:100 % Each cycle should be 1 min, 5 L through system?
     
-    % 1. Initial metabolic consumption by heart
-    bHeart = heart(b);
-    
-    % 2. Heart to lungs, lungs to heart (oxygenation phase)
+    b.i = i;
+    % 1. Heart to lungs, lungs to heart (oxygenation phase)
     bLung = lungs(b);
+    
+    % 2. Metabolic consumption by heart
+    bHeart = heart(bLung);
     
     % 3. Heart to muscle & kidney (consumption, filtration, excretion)
     bMus  = muscle(bLung);

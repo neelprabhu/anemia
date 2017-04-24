@@ -9,18 +9,26 @@
 
 function [bLung, fL] = lungs(b)
     
-    % Use ode45 to solve for diffusion of CO2 out of, O2 into blood (1st
-    % order)
+    % All-or-none binding of O2 to hemoglobin using saturation curve model
+    sat   = @(po2) 85./(0.89 + exp(-0.1037.*(po2-27.63))); % Hb saturation (%)
     
-    pO2   = linspace(0,100,11);
-    satv   = [0 10 28 53 71 80 86 90 92 95 95];
-    sat   = @(po2) 85./(0.89 + exp(-0.1037.*(po2-27.63)));
+    % Calculate total oxygen content, including Hb and dissolved
+    CaO2  = @(SaO2,Hb,PaO2) (SaO2.*Hb.*1.34)+(.003.*PaO2);  % Total O2 (mL/dL blood)
     
-    % Apply all-or-none binding for O2 to hemoglobin using saturation
-    % curve.
+    % Baseline values
+    Hb    = b.hemo.*100; % Hemoglobin in g/dL;
+    PAO2  = 100; % Alveolar O2 pressure (mmHg)
+    PaO2  = 95;  % Arterial O2 pressure (mmHg)
+    PvO2  = 40;  % Venous O2 pressure (mmHg)
+    PaCO2 = 40;  % Arterial CO2 pressure (mmHg)
+    
+    b.sat   = sat(PaO2); % Calculate and store Hb saturation
+    b.o2    = CaO2(b.sat,Hb,PaO2) ./ 100; % Calculate total oxygen content (mL/mL)
+    b.paO2  = PaO2;      % Store information about arterial O2
+    b.paCO2 = PaCO2;     % Store information about arterial CO2
 
-
-    % Reintegrate for outflow back to heart.
-
+    % Reintegrate for outflow back to heart.   
+    fL    = b.cOut .* 1;
+    bLung = b;
 
 end
