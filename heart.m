@@ -8,7 +8,11 @@
 %   fH    : Flow in/out.
 
 function [bHeart,fH] = heart(b)
-    
-   % Control cardiac output of next cycle by looking at O2 demand of tissue.
 
+    % Max cardiac output will be 15 L/min, very severe anemia.
+    oxNeed = b.oxNeed; % Number from 0 (SS) to 100 (severe anemia).
+    b.cOut = (15000 - 5000)./100 .* oxNeed + 5000; % mL/min
+    
+    bHeart = b;
+    fH     = b.dist(1) .* b.cOut;
 end

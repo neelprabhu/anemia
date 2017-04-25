@@ -9,6 +9,7 @@
 
 function [bBone, fB] = marrow(b)
 k = b.i; % Counter
+% Modeling aplastic anemia.
 if k<20
     b.hemo = 0.150*exp((20-20)*k/100);
 else
