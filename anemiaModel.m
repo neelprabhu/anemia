@@ -31,13 +31,15 @@ for i = 1:100 % Each cycle should be 1 min, 5 L through system?
     bKid  = kidney(bLung);
     
     % 4. Muscle & kidney to bone (generate RBCs, hemoglobin)
-    bBone = marrow(bKid);
+    bBone = marrow(bLung);
     
     % 5. Bone to small intestine (regain nutrients, plasma)
-    bInt  = intestine(bBone);
+    bInt  = intestine(bLung);
     
     % 6. Recycle
     b     = bInt;
+    
+    % 7. Mixing function bInt, bBone, bKid, bMus, bHeart.
     
     % 7. Record values of previous iteration (minute)
     
