@@ -9,4 +9,6 @@
 
 function [bKid,fK] = kidney(b)
 
+bKid = b;
+
 end
