@@ -9,4 +9,6 @@
 
 function [bInt,fI] = intestine(b)
 
+bInt = b;
+
 end
