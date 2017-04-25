@@ -7,6 +7,8 @@
 %   bMus: Blood parameters out of muscle.
 %   fM  : Flow in/out.
 
-function [bMus,fM] = muscle(b)
+function [bMus] = muscle(b)
+
+bMus = respir(b);
 
 end
