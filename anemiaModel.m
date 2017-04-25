@@ -13,6 +13,7 @@ b.h2o  = .51;                   % Water fraction in blood (g H20 / mL blood)
 b.glu  = .001;                  % Mass fraction of glucose in blood (g/mL)
 b.ions = [2.5 100 5.0 135];     % Ion concentrations, [Ca Cl K Na] (mmol/L)
 b.dist = [.04 .15 .22 .05 .20]; % CO Distribution (Heart, Muscle, Kidney, Bone, Intestine)
+b.oxNeed = 0;
 
 %% Send blood to organs:
 

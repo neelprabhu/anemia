@@ -8,7 +8,7 @@
 %   fL   : Flow in/out.
 
 function [bLung, fL] = lungs(b)
-    
+
     % All-or-none binding of O2 to hemoglobin using saturation curve model
     sat   = @(po2) 85./(0.89 + exp(-0.1037.*(po2-27.63))); % Hb saturation (%)
     
