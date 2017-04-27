@@ -8,9 +8,8 @@
 %   fI  : Flow in/out.
 
 function [bInt,fI] = intestine(b)
-
-
-bInt = b;
-b.gluc = 300;
+%Assume consume 300g glucose in a day that is broken down evenly over time
+b.glu = b.glu + 1.667 %mol/day
+bInt = b
 
 end
