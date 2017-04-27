@@ -9,6 +9,6 @@
 
 function [bInt,fI] = intestine(b)
 
-bInt = b;
 
+b.gluc = 2034;
 end
