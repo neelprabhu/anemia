@@ -9,6 +9,6 @@
 
 function [bInt,fI] = intestine(b)
 
-bInt = b;
+bInt = respir(b);
 
 end

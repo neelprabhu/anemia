@@ -8,11 +8,12 @@
 %   fB   : Flow in/out.
 
 function [bBone, fB] = marrow(b)
-k = b.i; % Counter
+
+bBone = respir(b);
+k = bBone.i; % Counter
 % Modeling aplastic anemia.
 if k<20
-    b.hemo = 0.150*exp((20-20)*k/100);
+    bBone.hemo = 0.150*exp((20-20)*k/100);
 else
-    b.hemo = 0.12+0.15*exp((20-28.1)*k/100);
+    bBone.hemo = 0.12+0.15*exp((20-28.1)*k/100);
 end
-bBone = b;
