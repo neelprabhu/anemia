@@ -47,3 +47,4 @@ for i = 1:100 % Each cycle should be 1 min, 5 L through system?
 end
 
 %% Create relevant graphs from b struct
+figure(1)
