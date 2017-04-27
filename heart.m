@@ -18,3 +18,4 @@ function [bHeart,fH] = heart(b)
 end
 
 % new function to calculate heart rate
+% new change, adding some more functions
