@@ -7,11 +7,12 @@
 %   bBone: Blood parameters out of bone marrow.
 %   fB   : Flow in/out.
 
-function [bBone,fB,b.hemo] = marrow(b,i)
-if i<20
-    b.hemo=0.150*exp((20-20)*i/100)
-    else 
-    b.hemo=0.12+0.15*exp((20-28.1)*i/100)
-    end
-    
+function [bBone, fB] = marrow(b)
+k = b.i; % Counter
+% Modeling aplastic anemia.
+if k<20
+    b.hemo = 0.150*exp((20-20)*k/100); %hello this is Megan testing stuff and being a turtle
+else
+    b.hemo = 0.12+0.15*exp((20-28.1)*k/100);
 end
+bBone = b;
