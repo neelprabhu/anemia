@@ -17,5 +17,5 @@ function [bHeart,fH] = heart(b)
     fH     = b.dist(1) .* b.cOut;
 end
 
-% hey guys, are you seeing this change?
-% this is my second change, are you seeing it?
+% new function to calculate heart rate
+% new change, adding some more functions
