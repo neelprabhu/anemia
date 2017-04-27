@@ -16,3 +16,4 @@ else
     b.hemo = 0.12+0.15*exp((20-28.1)*k/100);
 end
 bBone = b;
+%trying to edit stuff again
