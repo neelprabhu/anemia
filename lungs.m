@@ -37,6 +37,8 @@ function [bLung, fL] = lungs(b)
     concO2hemo = b.hemo .* (1./MWHb) .* 4;
     concO2diss = PaO2 .* 0.003 ./ 100 .* PaO2 ./ (8.314e6)./ (310);
     b.concO2   = (concO2hemo + concO2diss) .* 32; % g O2/ml blood
+    %b.concCO2  = PaCO2 .* 0.003 ./ 100 .* PaCO2 ./ (8.314e6)./ (310);
+    b.concCO2  = 1.012; % g CO2/mL
     
     % Reintegrate for outflow back to heart.   
     fL    = b.cOut .* 1;

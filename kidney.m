@@ -9,6 +9,6 @@
 
 function [bKid,fK] = kidney(b)
 
-bKid = b;
+bKid = respir(b);
 
 end
