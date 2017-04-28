@@ -18,5 +18,6 @@ bHeart.concGlu = bHeart.glu .* dist(1) + bMus.glu .* dist(2) + ...
           bKid.glu .* dist(3) + bBone.glu .* dist(4) + ...
           bInt.glu .* dist(5) + bElse.glu .* dist(6);
       
-b = bHeart;    
+b = bHeart;
+b.hemo = bBone.hemo;
 end

@@ -11,4 +11,5 @@ function [bInt,fI] = intestine(b)
 
 bInt = respir(b);
 
+bInt.glu = 0.001895; % between .0018 and .0019
 end
