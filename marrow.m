@@ -13,7 +13,9 @@ bBone = respir(b);
 k = bBone.i; % Counter
 % Modeling aplastic anemia.
 if k<20
+
     bBone.hemo = 0.150*exp((20-20)*k/100);
 else
     bBone.hemo = 0.12+0.15*exp((20-28.1)*k/100);
 end
+bBone = b;
