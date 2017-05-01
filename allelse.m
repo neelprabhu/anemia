@@ -6,11 +6,11 @@ function [bElse] = allelse(b)
 bElse = respir(b);
 
 if b.i == 10
-    baseO2 = b.concO2; % Set baseline O2 at steady state.
+    bElse.baseO2 = b.concO2; % Set baseline O2 at steady state.
 end
 
 if b.i > 20
-    bElse.oxNeed = (b.concO2 - baseO2) .* c;
+    bElse.oxNeed = (b.concO2 - b.baseelseO2) .* 1;
     if bElse.oxNeed > 100
         bElse.oxNeed = 100;
     end

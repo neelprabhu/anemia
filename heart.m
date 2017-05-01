@@ -12,11 +12,11 @@ function [bHeart] = heart(b)
     bHeart = respir(b);
     
     if b.i == 10
-        baseO2 = b.concO2; % Set baseline O2 at steady state.
+        bHeart.baseO2 = b.concO2; % Set baseline O2 at steady state.
     end
     
     if b.i > 20
-        bHeart.oxNeed = (b.concO2 - baseO2) .* 1; % Compute oxygen need
+        bHeart.oxNeed = (b.concO2 - b.baseheartO2) .* 1; % Compute oxygen need
         if bHeart.oxNeed > 100
             bHeart.oxNeed = 100; % Max oxygen need is 100
         end

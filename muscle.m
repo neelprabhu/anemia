@@ -12,11 +12,11 @@ function [bMus] = muscle(b)
 bMus = respir(b);
 
 if b.i == 10
-    baseO2 = b.concO2; % Set baseline O2 at steady state.
+    bMus.baseO2 = b.concO2; % Set baseline O2 at steady state.
 end
 
 if b.i > 20
-    bMus.oxNeed = (b.concO2 - baseO2) .* 1;
+    bMus.oxNeed = (b.concO2 - b.basemusO2) .* 1;
     if bMus.oxNeed > 100
         bMus.oxNeed = 100;
     end
