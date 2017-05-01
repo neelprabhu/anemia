@@ -3,7 +3,7 @@
 % Mixing function to incorporate all blood components before sending back
 % to heart.
 
-function bHeart = mix(bHeart, bMus, bKid, bBone, bInt, bElse)
+function b = mix(bHeart, bMus, bKid, bBone, bInt, bElse)
 
 dist = bHeart.dist;
 a = bHeart.glu;
@@ -38,6 +38,9 @@ bHeart.basemusO2   = bMus.baseO2;
 bHeart.baseboneO2  = bBone.baseO2;
 bHeart.baseelseO2  = bElse.baseO2;
 bHeart.basekidO2   = bKid.baseO2;
+end
+
+if bHeart.i > 20
 end
 
 b = bHeart;

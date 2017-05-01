@@ -8,8 +8,6 @@ b.p    = 1.06;         % Density of blood (g/mL)
 b.T    = 37;           % Temperature of blood (C)
 b.hemo = .150;         % Hemoglobin mass fraction in blood (g/mL)
 b.rbc  = b.hemo;       % Assume RBCs are entirely hemoglobin (~.95)
-b.response = 1;        % Cardiac output response
-b.respfactor = 10000;
 
 b.concH2O  = .51;               % Water fraction in blood (g H20 / mL blood)
 b.concGlu  = .001;              % Mass fraction of glucose in blood (g/mL)
@@ -23,30 +21,28 @@ for i = 1:100 % Each cycle should be x min, values during cycle change once.
     
     b.i = i;
     % 1. Heart to lungs, lungs to heart (oxygenation phase)
-    bLung   = lungs(b);
+    bLung = lungs(b);
     
-    % 2. Metabolic consumption by heart, change cardiac output
-    bHeart  = heart(bLung);
-    cOut    = bHeart.cOut;
+    % 2. Metabolic consumption by heart
+    bHeart = heart(bLung);
     
     % 3. Heart to muscle & kidney (consumption, filtration, excretion)
-    bMus  = muscle(bLung,cOut);
-    bKid  = kidney(bLung,cOut);
+    bMus  = muscle(bLung);
+    bKid  = kidney(bLung);
     
     % 4. Muscle & kidney to bone (generate RBCs, hemoglobin)
-    bBone = marrow(bLung,cOut);
+    bBone = marrow(bLung);
     
     % 5. Bone to small intestine (regain nutrients, plasma)
-    bInt  = intestine(bLung,cOut);
+    bInt  = intestine(bLung);
     
     % 6. Other stuff
-    bElse = allelse(bLung,cOut);
+    bElse = allelse(bLung);
     
     % 7. Mixing function bInt, bBone, bKid, bMus, bHeart.
     b = mix(bHeart, bMus, bKid, bBone, bInt, bElse);
     
     % 8. Record values of previous iteration (minute)
-    out(i)    = cOut;
     oxin(i)   = b.concO2;
     oxout(i)  = bLung.concO2;
     co2in(i)  = b.concCO2;
@@ -63,8 +59,6 @@ plot([1:100], oxout, 'ko')
 figure(3)
 plot([1:100], glu,'ko')
 figure(4)
-plot([1:100], out,'ko')
-% figure(4)
-% plot([1:100], co2in,'ko')
-% figure(5)
+plot([1:100], co2in,'ko')
+figure(5)
 % plot([1:100], co2out,'ko')

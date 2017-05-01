@@ -7,22 +7,22 @@
 %   bInt: Blood parameters out of intestine.
 %   fI  : Flow in/out.
 
-function [bInt] = intestine(b)
+function [bInt] = intestine(b,cOut)
 
-bInt = respir(b);
+respfactor = (cOut-5000)./5000 + 1;
+bInt = respir(b,respfactor);
 
 if b.i == 10
     bInt.baseO2 = b.concO2; % Set baseline O2 at steady state.
 end
 
-if b.i > 20
-    bInt.oxNeed = (b.concO2 - b.baseintO2) .* 1; % Compute oxygen need
+if b.i > 20 && b.response
+    bInt.oxNeed = abs((b.concO2 - b.baseintO2) .* b.respfactor); % Compute oxygen need
     if bInt.oxNeed > 100
         bInt.oxNeed = 100; % Max oxygen need is 100
     end
 end
 
-%Assume consume 300g glucose in a day that is broken down evenly over time
+bInt.glu = 0.003214;
 
-%b.glu = b.glu + 1.667; %mol/day
 end
