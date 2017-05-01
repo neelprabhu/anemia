@@ -16,9 +16,9 @@ if b.i == 10
 end
 
 if b.i > 20
-    bBone.oxNeed = (b.concO2 - baseO2) .* 1; % Compute oxygen need
+    bBone.oxNeed = (b.concO2 - baseO2) .* c;
     if bBone.oxNeed > 100
-        bBone.oxNeed = 100; % Maximum oxygen need is 100.
+        bBone.oxNeed = 100; % Maximum oxygen need is 100;
     end
 end
 
