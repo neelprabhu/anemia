@@ -7,16 +7,18 @@
 %   bMus: Blood parameters out of muscle.
 %   fM  : Flow in/out.
 
-function [bMus] = muscle(b)
+function [bMus] = muscle(b,cOut)
 
-bMus = respir(b);
+respfactor = (cOut-5000)./5000 + 1;
+
+bMus = respir(b,respfactor);
 
 if b.i == 10
     bMus.baseO2 = b.concO2; % Set baseline O2 at steady state.
 end
 
 if b.i > 20
-    bMus.oxNeed = (b.concO2 - b.basemusO2) .* 1;
+    bMus.oxNeed = abs((b.concO2 - b.basemusO2) .* 1);
     if bMus.oxNeed > 100
         bMus.oxNeed = 100;
     end

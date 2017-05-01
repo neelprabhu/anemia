@@ -8,6 +8,7 @@ b.p    = 1.06;         % Density of blood (g/mL)
 b.T    = 37;           % Temperature of blood (C)
 b.hemo = .150;         % Hemoglobin mass fraction in blood (g/mL)
 b.rbc  = b.hemo;       % Assume RBCs are entirely hemoglobin (~.95)
+b.response = 0;        % Cardiac output response
 
 b.concH2O  = .51;               % Water fraction in blood (g H20 / mL blood)
 b.concGlu  = .001;              % Mass fraction of glucose in blood (g/mL)
@@ -21,28 +22,30 @@ for i = 1:100 % Each cycle should be x min, values during cycle change once.
     
     b.i = i;
     % 1. Heart to lungs, lungs to heart (oxygenation phase)
-    bLung = lungs(b);
+    bLung   = lungs(b);
     
-    % 2. Metabolic consumption by heart
-    bHeart = heart(bLung);
+    % 2. Metabolic consumption by heart, change cardiac output
+    bHeart  = heart(bLung);
+    cOut    = bHeart.cOut;
     
     % 3. Heart to muscle & kidney (consumption, filtration, excretion)
-    bMus  = muscle(bLung);
-    bKid  = kidney(bLung);
+    bMus  = muscle(bLung,cOut);
+    bKid  = kidney(bLung,cOut);
     
     % 4. Muscle & kidney to bone (generate RBCs, hemoglobin)
-    bBone = marrow(bLung);
+    bBone = marrow(bLung,cOut);
     
     % 5. Bone to small intestine (regain nutrients, plasma)
-    bInt  = intestine(bLung);
+    bInt  = intestine(bLung,cOut);
     
     % 6. Other stuff
-    bElse = allelse(bLung);
+    bElse = allelse(bLung,cOut);
     
     % 7. Mixing function bInt, bBone, bKid, bMus, bHeart.
     b = mix(bHeart, bMus, bKid, bBone, bInt, bElse);
     
     % 8. Record values of previous iteration (minute)
+    out(i)    = cOut;
     oxin(i)   = b.concO2;
     oxout(i)  = bLung.concO2;
     co2in(i)  = b.concCO2;
@@ -52,13 +55,15 @@ for i = 1:100 % Each cycle should be x min, values during cycle change once.
 end
 
 %% Create relevant graphs from b struct
-figure(1)
-plot([1:100], oxin, 'ko')
-figure(2)
-plot([1:100], oxout, 'ko')
+% figure(1)
+% plot([1:100], oxin, 'ko')
+% figure(2)
+% plot([1:100], oxout, 'ko')
 figure(3)
 plot([1:100], glu,'ko')
-figure(4)
-plot([1:100], co2in,'ko')
-figure(5)
-plot([1:100], co2out,'ko')
+%figure(4)
+%plot([1:100], out,'ko')
+% figure(4)
+% plot([1:100], co2in,'ko')
+% figure(5)
+% plot([1:100], co2out,'ko')

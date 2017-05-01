@@ -9,7 +9,10 @@
 
 function [bHeart] = heart(b)
 
-    bHeart = respir(b);
+    % Max cardiac output will be 15 L/min, very severe anemia.
+    oxNeed = b.oxNeed; % Number from 0 (SS) to 100 (severe anemia).
+    bHeart = respir(b,1);
+    bHeart.cOut = (15000 - 5000)./100 .* oxNeed + 5000; % mL/min
     
     if b.i == 10
         bHeart.baseO2 = b.concO2; % Set baseline O2 at steady state.
@@ -22,8 +25,4 @@ function [bHeart] = heart(b)
         end
     end
 
-    % Max cardiac output will be 15 L/min, very severe anemia.
-    oxNeed = b.oxNeed; % Number from 0 (SS) to 100 (severe anemia).
-    
-    bHeart.cOut = (15000 - 5000)./100 .* oxNeed + 5000; % mL/min
 end
