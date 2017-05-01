@@ -7,16 +7,16 @@
 %   bBone: Blood parameters out of bone marrow.
 %   fB   : Flow in/out.
 
-function [bBone, fB] = marrow(b)
+function [bBone] = marrow(b)
 
 bBone = respir(b);
 
 if b.i == 10
-    baseO2 = b.concO2; % Set baseline O2 at steady state.
+    bBone.baseO2 = b.concO2; % Set baseline O2 at steady state.
 end
 
 if b.i > 20
-    bBone.oxNeed = (b.concO2 - baseO2) .* 1; % Compute oxygen need
+    bBone.oxNeed = (b.concO2 - b.baseboneO2) .* 1; % Compute oxygen need
     if bBone.oxNeed > 100
         bBone.oxNeed = 100; % Maximum oxygen need is 100.
     end
@@ -29,4 +29,3 @@ if k<20
 else
     bBone.hemo = 0.12+0.15*exp((20-28.1)*k/100);
 end
-bBone = b;
