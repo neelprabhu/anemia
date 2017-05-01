@@ -40,6 +40,9 @@ bHeart.baseelseO2  = bElse.baseO2;
 bHeart.basekidO2   = bKid.baseO2;
 end
 
+if bHeart.i > 20
+end
+
 b = bHeart;
 b.hemo = bBone.hemo;
 end

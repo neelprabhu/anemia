@@ -16,8 +16,8 @@ if b.i == 10
     bBone.baseO2 = b.concO2; % Set baseline O2 at steady state.
 end
 
-if b.i > 20
-    bBone.oxNeed = abs((b.concO2 - b.baseboneO2) .* 1); % Compute oxygen need
+if b.i > 20 && b.response
+    bBone.oxNeed = abs((b.concO2 - b.baseboneO2) .* b.respfactor); % Compute oxygen need
     if bBone.oxNeed > 100
         bBone.oxNeed = 100; % Maximum oxygen need is 100.
     end

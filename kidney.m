@@ -16,8 +16,8 @@ if b.i == 10
     bKid.baseO2 = b.concO2; % Set baseline O2 at steady state.
 end
 
-if b.i > 20
-    bKid.oxNeed = abs((b.concO2 - b.basekidO2) .* 1);
+if b.i > 20 && b.response
+    bKid.oxNeed = abs((b.concO2 - b.basekidO2) .* b.respfactor);
     if bKid.oxNeed > 100
         bKid.oxNeed = 100;
     end
