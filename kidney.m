@@ -11,4 +11,15 @@ function [bKid,fK] = kidney(b)
 
 bKid = respir(b);
 
+if b.i == 10
+    baseO2 = b.concO2; % Set baseline O2 at steady state.
+end
+
+if b.i > 20
+    bKid.oxNeed = (b.concO2 - baseO2) .* 1;
+    if bKid.oxNeed > 100
+        bKid.oxNeed = 100;
+    end
+end
+
 end
