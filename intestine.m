@@ -25,5 +25,4 @@ end
 %Assume consume 300g glucose in a day that is broken down evenly over time
 
 b.glu = b.glu + 1.667; %mol/day
-bInt.glu = 0.001895; % between .0018 and .0019
 end
