@@ -1,4 +1,4 @@
-function [bResp] = respir(b)
+function [bResp] = respir(b,factor)
 
 % Molecular weights
 MW_glu = 180;
@@ -7,10 +7,10 @@ MW_co2 = 44;
 MW_h2o = 18;
 
 % b._ is in g/mL
-ni_glu = b.concGlu/MW_glu; % moles/mL
-ni_h20 = b.concH2O/MW_h2o; % moles/mL
-ni_o2 = b.concO2/MW_o2;    % moles/mL
-ni_co2 = b.concCO2/MW_co2; % moles/mL
+ni_glu = b.concGlu/MW_glu; % moles/mL/cycle
+ni_h20 = b.concH2O/MW_h2o; % moles/mL/cycle
+ni_o2 = b.concO2/MW_o2;    % moles/mL/cycle
+ni_co2 = b.concCO2/MW_co2; % moles/mL/cycle
 
 % determine limiting factor between glucose and oxygen
 R = min((ni_glu/1),(ni_o2/6)) * 0.8;
