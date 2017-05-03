@@ -24,5 +24,6 @@ if b.i > 20 && b.response
 end
 
 bInt.glu = 0.003214;
+bInt.h2o = 1.440;
 
 end
