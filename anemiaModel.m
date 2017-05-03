@@ -9,7 +9,7 @@ b.T    = 37;           % Temperature of blood (C)
 b.hemo = .150;         % Hemoglobin mass fraction in blood (g/mL)
 b.rbc  = b.hemo;       % Assume RBCs are entirely hemoglobin (~.95)
 b.response = 0;        % Cardiac output response
-b.respfactor = 10000;
+b.respfactor = 100000; % Adjust for physiological change in cardiac output
 
 b.concH2O  = .51;               % Water fraction in blood (g H20 / mL blood)
 b.concGlu  = .001;              % Mass fraction of glucose in blood (g/mL)
@@ -46,24 +46,25 @@ for i = 1:100 % Each cycle should be x min, values during cycle change once.
     b = mix(bHeart, bMus, bKid, bBone, bInt, bElse);
     
     % 8. Record values of previous iteration (minute)
-    out(i)    = cOut;
-    oxin(i)   = b.concO2;
-    oxout(i)  = bLung.concO2;
-    co2in(i)  = b.concCO2;
-    co2out(i) = bLung.concCO2;
-    glu(i)    = b.concGlu;
-    hemo(i)   = b.hemo;
+    out(i)      = cOut;
+    oxin(i)     = b.concO2;
+    oxout(i)    = bLung.concO2;
+    totoxout(i) = bLung.concO2 .* cOut;
+    co2in(i)    = b.concCO2;
+    co2out(i)   = bLung.concCO2;
+    glu(i)      = b.concGlu;
+    hemo(i)     = b.hemo;
 end
 
 %% Create relevant graphs from b struct
-% figure(1)
-% plot([1:100], oxin, 'ko')
-figure(2)
-plot([1:100], oxout, 'ko')
+%figure(1)
+%plot([1:100], oxin, 'ko')
+%figure(2)
+%plot([1:100], oxout, 'ko')
 % figure(3)
 % plot([1:100], glu,'ko')
-% figure(4)
-% plot([1:100], out,'ko')
+%figure(4)
+%plot([1:100], out,'ko')
 % figure(4)
 % plot([1:100], co2in,'ko')
 % figure(5)
