@@ -31,6 +31,6 @@ end
 
 waterout = b.concH2O .* bKid.GFR;
 totwater = b.cOut .* .22 .* b.concH2O - waterout;
-bKid.h2o = totwater ./ (b.cOut .* .22);
+bKid.h2o = totwater ./
 
 end

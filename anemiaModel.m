@@ -13,7 +13,7 @@ b.respfactor = 262e3;  % Adjust for physiological change in cardiac output
 
 b.concH2O  = .51;               % Water fraction in blood (g H20 / mL blood)
 b.concGlu  = .001;              % Mass fraction of glucose in blood (g/mL)
-b.ions = [2.5 100 5.0 135];     % Ion concentrations, [Ca Cl K Na] (mmol/L)
+b.ions = [100 5.0 135];         % Ion concentrations, [Cl K Na] (mmol/L)
 b.dist = [.04 .15 .22 .05 .20 .34]; % CO Distribution (Heart, Muscle, Kidney, Bone, Intestine, else)
 b.oxNeed = 0;
 
@@ -54,6 +54,7 @@ for i = 1:100 % Each cycle should be x min, values during cycle change once.
     co2out(i)   = bLung.concCO2;
     glu(i)      = b.concGlu;
     hemo(i)     = b.hemo;
+    h2o(i)      = b.h2o;
 end
 
 %% Create relevant graphs from b struct
@@ -69,6 +70,13 @@ xlabel('Cycle (days)')
 ylabel('Hemoglobin concentration in systemic blood (g/mL)')
 set(gca,'YLim',[.1175 .1525])
 title('Hemoglobin Concentration')
+
+figure(3)
+plot([1:100], out, 'r-','LineWidth',1)
+xlabel('Cycle (days)')
+ylabel('Cardiac output (mL/min)')
+set(gca,'YLim',[4900 6400])
+title('Cardiac Output')
 % figure(2)
 % plot([1:100], oxin, 'ko')
 % figure(3)
@@ -77,7 +85,7 @@ title('Hemoglobin Concentration')
 % plot([1:100], glu,'ko')
 % figure(5)
 % plot([1:100], out,'ko')
-% figure(4)
-% plot([1:100], co2in,'ko')
-% figure(5)
-% plot([1:100], co2out,'ko')
+figure(4)
+plot([1:100], co2in,'ko')
+figure(5)
+plot([1:100], co2out,'ko')
