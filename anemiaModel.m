@@ -8,8 +8,8 @@ b.p    = 1.06;         % Density of blood (g/mL)
 b.T    = 37;           % Temperature of blood (C)
 b.hemo = .150;         % Hemoglobin mass fraction in blood (g/mL)
 b.rbc  = b.hemo;       % Assume RBCs are entirely hemoglobin (~.95)
-b.response = 0;        % Cardiac output response
-b.respfactor = 100000; % Adjust for physiological change in cardiac output
+b.response = 1;        % Cardiac output response
+b.respfactor = 250e3;  % Adjust for physiological change in cardiac output
 
 b.concH2O  = .51;               % Water fraction in blood (g H20 / mL blood)
 b.concGlu  = .001;              % Mass fraction of glucose in blood (g/mL)
@@ -57,14 +57,16 @@ for i = 1:100 % Each cycle should be x min, values during cycle change once.
 end
 
 %% Create relevant graphs from b struct
+figure(1)
+plot([1:100], totoxout, 'ko')
 %figure(1)
 %plot([1:100], oxin, 'ko')
 %figure(2)
 %plot([1:100], oxout, 'ko')
 % figure(3)
 % plot([1:100], glu,'ko')
-%figure(4)
-%plot([1:100], out,'ko')
+figure(4)
+plot([1:100], out,'ko')
 % figure(4)
 % plot([1:100], co2in,'ko')
 % figure(5)
