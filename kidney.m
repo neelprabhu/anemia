@@ -24,8 +24,11 @@ if bKid.GFR < 90
     bKid.GFR = 90;
 end
 
-waterout = b.concH2O .* bKid.GFR; % Calculations for water out.
-totwater = b.cOut .* .22 .* b.concH2O - waterout;
-bKid.h2o = totwater ./ (b.cOut .* .22);
+waterout  = b.concH2O .* bKid.GFR; % Calculations for water out.
+totwater  = b.cOut .* .22 .* b.concH2O - waterout;
+bKid.h2o  = totwater ./ (b.cOut .* .22);
+totalions = b.ions .* b.cOut .* .22 .* .001; % mmol
+ionsout   = totalions ./ (b.cOut .* .22 - waterout) .* 1000;
+bKid.ions = ionsout;
 
 end

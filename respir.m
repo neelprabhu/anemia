@@ -27,7 +27,7 @@ nj_co2 = ni_co2 + 6*R;
 
 % Getting outputs of function ready
 b.glu = nj_glu.*MW_glu;
-b.o2  = nj_o2.*MW_o2;
+b.o2  = nj_o2.*MW_o2; % g/mL
 b.co2 = nj_co2.*MW_co2;
 b.h2o = nj_h2o.*MW_h2o;
 bResp = b;

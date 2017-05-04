@@ -55,38 +55,43 @@ for i = 1:100 % Each cycle should be x min, values during cycle change once.
     glu(i)      = b.concGlu;
     hemo(i)     = b.hemo;
     h2o(i)      = b.h2o;
+    cl(i)       = b.ions(1);
+    pot(i)      = b.ions(2);
+    na(i)       = b.ions(3);
 end
 
 %% Create relevant graphs from b struct
 figure(1)
-plot([1:100], totoxout, 'r-','LineWidth',1)
-xlabel('Cycle (days)')
-ylabel('Total O_{2} delivered to tissues per cycle (g)')
-title('Total Oxygen Delivered with Cardiac Response')
-
-figure(2)
-plot([1:100], hemo, 'r-','LineWidth',1)
-xlabel('Cycle (days)')
-ylabel('Hemoglobin concentration in systemic blood (g/mL)')
-set(gca,'YLim',[.1175 .1525])
-title('Hemoglobin Concentration')
-
-figure(3)
-plot([1:100], out, 'r-','LineWidth',1)
-xlabel('Cycle (days)')
-ylabel('Cardiac output (mL/min)')
-set(gca,'YLim',[4900 6400])
-title('Cardiac Output')
-
-figure(4)
-plot([1:100], oxin, 'ko')
-figure(5)
-plot([1:100], oxout, 'ko')
-figure(6)
-plot([1:100], glu,'ko')
-figure(7)
-plot([1:100], out,'ko')
-figure(8)
-plot([1:100], co2in,'ko')
-figure(9)
-plot([1:100], co2out,'ko')
+plot([1:100], pot, 'r-','LineWidth',1)
+% figure(1)
+% plot([1:100], totoxout, 'r-','LineWidth',1)
+% xlabel('Cycle (days)')
+% ylabel('Total O_{2} delivered to tissues per cycle (g)')
+% title('Total Oxygen Delivered with Cardiac Response')
+% 
+% figure(2)
+% plot([1:100], hemo, 'r-','LineWidth',1)
+% xlabel('Cycle (days)')
+% ylabel('Hemoglobin concentration in systemic blood (g/mL)')
+% set(gca,'YLim',[.1175 .1525])
+% title('Hemoglobin Concentration')
+% 
+% figure(3)
+% plot([1:100], out, 'r-','LineWidth',1)
+% xlabel('Cycle (days)')
+% ylabel('Cardiac output (mL/min)')
+% set(gca,'YLim',[4900 6400])
+% title('Cardiac Output')
+% 
+% figure(4)
+% plot([1:100], oxin, 'ko')
+% figure(5)
+% plot([1:100], oxout, 'ko')
+% figure(6)
+% plot([1:100], glu,'ko')
+% figure(7)
+% plot([1:100], out,'ko')
+% figure(8)
+% plot([1:100], co2in,'ko')
+% figure(9)
+% plot([1:100], co2out,'ko')
