@@ -76,25 +76,13 @@ end
 
 %% Create relevant graphs from b struct
 
-% heartdiff = (ox-oxheart).* cOut .* .04 * 720;
-% musdiff = (ox-oxmus).* cOut .* .15* 720;
-% kiddiff = (ox-oxkid).* cOut .* .22* 720;
-% bonediff = (ox-oxbone).* cOut .* .05* 720;
-% intdiff = (ox-oxint).* cOut .* .20* 720;
-% 
-% plot([1:100], heartdiff,'k-','LineWidth',1)
-% hold on
-% plot([1:100], musdiff,'k--','LineWidth',1)
-% plot([1:100], kiddiff,'k-.','LineWidth',1)
-% plot([1:100], bonediff,'k:','LineWidth',1)
-% plot([1:100], intdiff,'k.','LineWidth',1)
-% hold off
-% xlabel('Time (day cycles)')
-% ylabel('Total oxygen consumption per day (g)')
-% title('Total Oxygen Consumption in Major Organs')
-% legend('Heart','Muscle','Kidney','Bone Marrow','Intestine')
-
 figure(1)
+plot([1:100], totoxout, 'r-','LineWidth',1)
+xlabel('Cycle (days)')
+ylabel('Total O_{2} delivered to tissues per cycle (g)')
+title('Total Oxygen Delivered with Cardiac Response')
+
+figure(2)
 hold on
 plot([1:100], h2o,'k-','LineWidth',1)
 plot([1:100], h2okid,'k--','LineWidth',1)
@@ -105,101 +93,85 @@ ylabel('Plasma concentration (g/mL)')
 title('Blood Plasma Concentration Levels')
 legend('Plasma through lung', 'Plasma out of kidney', 'Plasma out of intestine','Location','SouthEast')
 
+figure(3)
+plot([1:100], hemo, 'r-','LineWidth',1)
+xlabel('Cycle (days)')
+ylabel('Hemoglobin concentration in systemic blood (g/mL)')
+set(gca,'YLim',[.1175 .1525])
+title('Hemoglobin Concentration')
 
+figure(4)
+plot([1:100], out, 'r-','LineWidth',1)
+xlabel('Cycle (days)')
+ylabel('Cardiac output (mL/min)')
+set(gca,'YLim',[4900 6400])
+title('Cardiac Output')
 
+sat   = @(po2) 85./(0.89 + exp(-0.1037.*(po2-27.63)));
+CaO2  = @(SaO2,Hb,PaO2) (SaO2.*Hb.*1.34)+(.003.*PaO2);
 
+figure(5)
+plot(1:100, sat(1:100),'k-')
+xlabel('Partial pressure of oxygen (mmHg)')
+ylabel('Hemoglobin saturation (%)')
+title('Hemoglobin Saturation Curve')
 
+figure(6)
+plot(1:100, CaO2(sat(1:100),.150,1:100),'k-')
+hold on
+plot(1:100, CaO2(sat(1:100),.120,1:100),'k--')
+xlabel('Partial pressure of oxygen (mmHg)')
+ylabel('Total oxygen content (mL/dL)')
+title('Total Oxygen Content')
+legend('Healthy Hb = .150 g/mL','Anemic Hb = .120 g/mL','Location','SouthEast')
 
+figure(7)
+plot([1:100], glu,'k-','LineWidth',1)
+hold on
+plot([1:100], gluint,'k--','LineWidth',1)
+plot([1:100], glumus,'k-.','LineWidth',1)
+hold off
+xlabel('Time (day cycles)')
+ylabel('Glucose concentration (g/mL)')
+title('Blood Glucose Levels')
+legend('Glucose leaving lung','Glucose leaving intestine','Glucose leaving muscle','Location','SouthEast')
 
-% sat   = @(po2) 85./(0.89 + exp(-0.1037.*(po2-27.63)));
-% CaO2  = @(SaO2,Hb,PaO2) (SaO2.*Hb.*1.34)+(.003.*PaO2);
-% 
-% figure(1)
-% plot(1:100, sat(1:100),'k-')
-% xlabel('Partial pressure of oxygen (mmHg)')
-% ylabel('Hemoglobin saturation (%)')
-% title('Hemoglobin Saturation Curve')
-% 
-% figure(2)
-% plot(1:100, CaO2(sat(1:100),.150,1:100),'k-')
-% hold on
-% plot(1:100, CaO2(sat(1:100),.120,1:100),'k--')
-% xlabel('Partial pressure of oxygen (mmHg)')
-% ylabel('Total oxygen content (mL/dL)')
-% title('Total Oxygen Content')
-% legend('Healthy Hb = .150 g/mL','Anemic Hb = .120 g/mL','Location','SouthEast')
+figure(8)
+hold on
+plot([1:100], co2out,'k-','LineWidth',1)
+plot([1:100], co2mus,'k--','LineWidth',1)
+hold off
+set(gca,'YLim',[1e-3 1.625e-3])
+xlabel('Time (day cycles)')
+ylabel('Carbon dioxide concentration (g/mL)')
+title('Blood Carbon Dioxide Concentration Levels')
+legend('Carbon dioxide leaving lung', 'Carbon dioxide entering lung', 'Location','SouthEast')
 
-% figure(1)
-% plot([1:100], cl,'k-','LineWidth',1)
-% hold on
-% plot([1:100], clkid,'k--','LineWidth',1)
-% hold off
-% xlabel('Time (day cycles)')
-% ylabel('Chloride concentration (mM)')
-% title('Chloride Ion Levels')
-% legend('Chloride through lung','Chloride leaving kidney','Location','NorthEast')
+figure(9)
+plot([1:100], cl,'k-','LineWidth',1)
+hold on
+plot([1:100], clkid,'k--','LineWidth',1)
+hold off
+xlabel('Time (day cycles)')
+ylabel('Chloride concentration (mM)')
+title('Chloride Ion Levels')
+legend('Chloride through lung','Chloride leaving kidney','Location','NorthEast')
 
-% figure(1)
-% plot([1:100], glu,'k-','LineWidth',1)
-% hold on
-% plot([1:100], gluint,'k--','LineWidth',1)
-% plot([1:100], glumus,'k-.','LineWidth',1)
-% hold off
-% xlabel('Time (day cycles)')
-% ylabel('Glucose concentration (g/mL)')
-% title('Blood Glucose Levels')
-% legend('Glucose leaving lung','Glucose leaving intestine','Glucose leaving muscle','Location','SouthEast')
+heartdiff = (ox-oxheart).* cOut .* .04 * 720;
+musdiff = (ox-oxmus).* cOut .* .15* 720;
+kiddiff = (ox-oxkid).* cOut .* .22* 720;
+bonediff = (ox-oxbone).* cOut .* .05* 720;
+intdiff = (ox-oxint).* cOut .* .20* 720;
 
-% figure(2)
-% hold on
-% plot([1:100], co2out,'k-','LineWidth',1)
-% plot([1:100], co2mus,'k--','LineWidth',1)
-% hold off
-% set(gca,'YLim',[1e-3 1.625e-3])
-% xlabel('Time (day cycles)')
-% ylabel('Carbon dioxide concentration (g/mL)')
-% title('Blood Carbon Dioxide Concentration Levels')
-% legend('Carbon dioxide leaving lung', 'Carbon dioxide entering lung', 'Location','SouthEast')
-
-% figure(3)
-% plot([1:100], oxout,'k-','LineWidth',1)
-% hold on
-% plot([1:100], oxmus,'k--','LineWidth',1)
-% hold off
-% xlabel('Time (day cycles)')
-% ylabel('Oxygen concentration (g/mL)')
-% title('Blood Oxygen Concentration Levels with No Cardiac Response')
-% legend('Oxygen leaving lung','Oxygen leaving muscle','Location','NorthEast')
-
-% figure(1)
-% plot([1:100], totoxout, 'r-','LineWidth',1)
-% xlabel('Cycle (days)')
-% ylabel('Total O_{2} delivered to tissues per cycle (g)')
-% title('Total Oxygen Delivered with Cardiac Response')
-% 
-% figure(2)
-% plot([1:100], hemo, 'r-','LineWidth',1)
-% xlabel('Cycle (days)')
-% ylabel('Hemoglobin concentration in systemic blood (g/mL)')
-% set(gca,'YLim',[.1175 .1525])
-% title('Hemoglobin Concentration')
-% 
-% figure(3)
-% plot([1:100], out, 'r-','LineWidth',1)
-% xlabel('Cycle (days)')
-% ylabel('Cardiac output (mL/min)')
-% set(gca,'YLim',[4900 6400])
-% title('Cardiac Output')
-% 
-% figure(4)
-% plot([1:100], oxin, 'ko')
-% figure(5)
-% plot([1:100], oxout, 'ko')
-% figure(6)
-% plot([1:100], glu,'ko')
-% figure(7)
-% plot([1:100], out,'ko')
-% figure(8)
-% plot([1:100], co2in,'ko')
-% figure(9)
-% plot([1:100], co2out,'ko')
+figure(10)
+plot([1:100], heartdiff,'k-','LineWidth',1)
+hold on
+plot([1:100], musdiff,'k--','LineWidth',1)
+plot([1:100], kiddiff,'k-.','LineWidth',1)
+plot([1:100], bonediff,'k:','LineWidth',1)
+plot([1:100], intdiff,'k.','LineWidth',1)
+hold off
+xlabel('Time (day cycles)')
+ylabel('Total oxygen consumption per day (g)')
+title('Total Oxygen Consumption in Major Organs')
+legend('Heart','Muscle','Kidney','Bone Marrow','Intestine')
