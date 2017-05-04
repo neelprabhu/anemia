@@ -18,7 +18,13 @@ if b.i > 20 && b.response
     end
 end
 
+<<<<<<< HEAD
 bInt.glu = 0.003214; % Constant absorption of glucose (g/mL)
 bInt.h2o = 1.440;    % Constant absorption of water (g/mL)
 
 end
+=======
+bInt.glu = 0.003214;
+
+end
+>>>>>>> master
