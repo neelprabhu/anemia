@@ -1,11 +1,6 @@
 % BME 260 Spring 2017
 % Modeling Blood Flow in Healthy and Anemic Physiology
-% Consume O2 and glucose, alter ion concentrations, remove water.
-% INPUTS:
-%   b: Master struct with blood parameters out of heart.
-% OUTPUTS:
-%   bKid: Blood parameters out of kidney
-%   fK  : Flow in/out.
+% Kidney: Consume O2 and glucose, alter ion concentrations, remove water.
 
 function [bKid] = kidney(b,cOut)
 
@@ -29,8 +24,11 @@ if bKid.GFR < 90
     bKid.GFR = 90;
 end
 
-waterout = b.concH2O .* bKid.GFR;
-totwater = b.cOut .* .22 .* b.concH2O - waterout;
-bKid.h2o = totwater ./ (b.cOut .* .22);
+waterout  = b.concH2O .* bKid.GFR; % Calculations for water out.
+totwater  = b.cOut .* .22 .* b.concH2O - waterout;
+bKid.h2o  = totwater ./ (b.cOut .* .22);
+totalions = b.ions .* b.cOut .* .22 .* .001; % mmol
+ionsout   = totalions ./ (b.cOut .* .22 - waterout) .* 1000;
+bKid.ions = ionsout;
 
 end
