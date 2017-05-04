@@ -1,11 +1,6 @@
 % BME 260 Spring 2017
 % Modeling Blood Flow in Healthy and Anemic Physiology
 % Lung: Remove CO2 from blood, add O2 via hemoglobin. No consumption.
-% INPUTS:
-%   b: Master struct with blood parameters out of heart.
-% OUTPUTS:
-%   bLung: Blood parameters out of lung.
-%   fL   : Flow in/out.
 
 function [bLung] = lungs(b)
 
@@ -23,11 +18,6 @@ function [bLung] = lungs(b)
     PvO2  = 40;  % Venous O2 pressure (mmHg), constant?
     PaCO2 = 40;  % Arterial CO2 pressure (mmHg), constant
     
-    % Diffusion first order ODE
-    tspan = [0 1000]; % ms
-    O20    = PvO2;     % Initial O2 before oxygenation
-    [t,y] = ode45(@(t,y) 2*t, tspan, O20);
-    
     b.sat   = sat(PaO2); % Calculate and store Hb saturation
     b.o2    = CaO2(b.sat,Hb,PaO2) ./ 1000; % Calculate total oxygen content (mL/mL)
     b.paO2  = PaO2;      % Store information about arterial O2
@@ -39,7 +29,6 @@ function [bLung] = lungs(b)
     b.concO2   = (concO2hemo + concO2diss) .* 32; % g O2/ml blood
     b.concCO2  = 1.012e-3; % g CO2/mL
     
-    % Reintegrate for outflow back to heart.   
-    fL    = b.cOut .* 1;
+    % Reintegrate for outflow back to heart.
     bLung = b;
 end

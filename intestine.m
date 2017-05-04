@@ -1,11 +1,6 @@
 % BME 260 Spring 2017
 % Modeling Blood Flow in Healthy and Anemic Physiology
-% Intestine: Consume nutrients, add water, ions, and glucose into blood.
-% INPUTS:
-%   b: Master struct with blood parameters out of heart.
-% OUTPUTS:
-%   bInt: Blood parameters out of intestine.
-%   fI  : Flow in/out.
+% Intestine: Consume nutrients, add water and glucose into blood.
 
 function [bInt] = intestine(b,cOut)
 
@@ -23,7 +18,7 @@ if b.i > 20 && b.response
     end
 end
 
-bInt.glu = 0.003214;
-bInt.h2o = 1.440;
+bInt.glu = 0.003214; % Constant absorption of glucose (g/mL)
+bInt.h2o = 1.440;    % Constant absorption of water (g/mL)
 
 end

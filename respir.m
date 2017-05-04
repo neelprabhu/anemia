@@ -1,3 +1,7 @@
+% BME 260 Spring 2017
+% Modeling Blood Flow in Healthy and Anemic Physiology
+% General respiration function that utilizes chemical reaction kinetics.
+
 function [bResp] = respir(b,factor)
 
 % Molecular weights
@@ -12,7 +16,7 @@ ni_h20 = (b.concH2O/MW_h2o).*factor; % moles/mL/cycle
 ni_o2  = (b.concO2/MW_o2).*factor;   % moles/mL/cycle
 ni_co2 = (b.concCO2/MW_co2).*factor; % moles/mL/cycle
 
-% determine limiting factor between glucose and oxygen
+% Determine limiting factor between glucose and oxygen
 R = min((ni_glu/1),(ni_o2/6)) * 0.8;
 
 % Set outflow concentrations based on the respiration equation
