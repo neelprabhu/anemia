@@ -1,6 +1,6 @@
 % BME 260 Spring 2017
 % Modeling Blood Flow in Healthy and Anemic Physiology
-
+% Yay our project was successful
 %% Initialize starting parameters of blood and heart
 b      = struct;       % All information about blood goes in here
 b.cOut = 5000;         % Cardiac output, baseline (mL/min)
